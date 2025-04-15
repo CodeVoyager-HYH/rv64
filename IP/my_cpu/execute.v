@@ -33,8 +33,8 @@ wire [63:0] tem_valE =	(regE_i_alu_func_sel == `alu_func_add 		)   ?  alu_valA +
 						(regE_i_alu_func_sel == `alu_func_slt  		)   ?  ($signed(alu_valA)   < $signed(alu_valB))   ? 64'd1 : 64'd0	:
 						(regE_i_alu_func_sel == `alu_func_sltu		)   ?  ($unsigned(alu_valA) < $unsigned(alu_valB)) ? 64'd1 : 64'd0	:
 						(regE_i_alu_func_sel == `alu_func_xor		)   ?  {alu_valA[63:0]	^ alu_valB[63:0]}						  	:
-						(regE_i_alu_func_sel == `alu_func_srl		) 	?  {$unsigned(alu_valA) >>  alu_valB}		:
-						(regE_i_alu_func_sel == `alu_func_sra		)  	?  {$signed(alu_valA)   >>> alu_valB}  		:
+						(regE_i_alu_func_sel == `alu_func_srl		) 	?  {$unsigned(alu_valA) >>  alu_valB}			:
+						(regE_i_alu_func_sel == `alu_func_sra		)  	?  {$signed(alu_valA)   >>> alu_valB}  			:
 						(regE_i_alu_func_sel == `alu_func_or 		)  	?  alu_valA | alu_valB							:
 						(regE_i_alu_func_sel == `alu_func_and 		)  	?  alu_valA & alu_valB							: 64'd0;
 

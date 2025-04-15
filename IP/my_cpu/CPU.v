@@ -88,21 +88,21 @@ decode u_decode(
     .clk                     	(clk                      ),
     .rst                     	(rst                      ),
     .regD_i_instr            	(regD_o_instr             ),
-    .regE_i_wb_reg_wen          (regE_o_wb_reg_wen),
-	.regE_i_wb_rd               (regE_o_wb_rd),
-	.execute_i_valE             (execute_o_valE),
-	.regW_i_valE                (regW_o_valE),
-	.regW_i_valM                (regW_o_valM),
-	.regW_i_wb_valD_sel         (regW_o_wb_valD_sel),
-	.regW_i_wb_rd               (regW_o_wb_rd),
-	.regW_i_wb_reg_wen          (regW_o_wb_reg_wen),
-    .regW_i_pc                  (regW_o_pc),
+    .regE_i_wb_reg_wen          (regE_o_wb_reg_wen        ),
+	.regE_i_wb_rd               (regE_o_wb_rd             ),
+	.execute_i_valE             (execute_o_valE           ),
+	.regW_i_valE                (regW_o_valE              ),
+	.regW_i_valM                (regW_o_valM              ),
+	.regW_i_wb_valD_sel         (regW_o_wb_valD_sel       ),
+	.regW_i_wb_rd               (regW_o_wb_rd             ), 
+	.regW_i_wb_reg_wen          (regW_o_wb_reg_wen        ),
+    .regW_i_pc                  (regW_o_pc                ),
 	//访存阶段数据前递
-	.regM_i_valE                (regM_o_valE),
-	.memory_i_valM              (memory_o_valM),
-	.regM_i_wb_valD_sel         (regM_o_wb_valD_sel),
-	.regM_i_wb_rd               (regM_o_wb_rd),
-	.regM_i_wb_reg_wen          (regM_o_wb_reg_wen),
+	.regM_i_valE                (regM_o_valE              ),
+	.memory_i_valM              (memory_o_valM            ),
+	.regM_i_wb_valD_sel         (regM_o_wb_valD_sel       ),
+	.regM_i_wb_rd               (regM_o_wb_rd             ),
+	.regM_i_wb_reg_wen          (regM_o_wb_reg_wen        ),
 
     .write_back_i_wb_reg_wen 	(write_back_o_wb_reg_wen  ),
     .write_back_i_wb_rd      	(write_back_o_wb_rd       ),
@@ -122,9 +122,9 @@ decode u_decode(
     .decode_o_wb_rd          	(decode_o_wb_rd           ),
     .decode_o_wb_valD_sel    	(decode_o_wb_valD_sel     ),
     .decode_o_need_jump      	(decode_o_need_jump       ),
-    .decode_o_is_jalr           (decode_o_is_jalr),
-    .decode_o_rs1               (decode_o_rs1),
-    .decode_o_rs2               ( decode_o_rs2)
+    .decode_o_is_jalr           (decode_o_is_jalr         ),
+    .decode_o_rs1               (decode_o_rs1             ),
+    .decode_o_rs2               (decode_o_rs2             )
 );
 
 //output declaration of module regE
@@ -248,7 +248,7 @@ regM u_regM(
     .regE_i_instr       	(regE_o_instr        ),
     .regE_i_pc          	(regE_o_pc           ),
     .regE_i_commit      	(regE_o_commit       ),
-    .regE_i_valB            (regE_o_valB),
+    .regE_i_valB            (regE_o_valB         ),
     .regM_o_valE        	(regM_o_valE         ),
     .regM_o_load_type       (regM_o_load_type    ),
     .regM_o_mem_ren      	(regM_o_mem_ren      ),
@@ -303,12 +303,12 @@ regW u_regW(
     .regM_i_instr       	(regM_o_instr        ),
     .regM_i_commit      	(regM_o_commit       ),
     .regM_i_pre_pc      	(regM_o_pre_pc       ),
-    .memory_i_valM          (memory_o_valM),
+    .memory_i_valM          (memory_o_valM       ),
     .regW_o_wb_reg_wen  	(regW_o_wb_reg_wen   ),
     .regW_o_wb_rd       	(regW_o_wb_rd        ),
     .regW_o_wb_valD_sel 	(regW_o_wb_valD_sel  ),
     .regW_o_valE        	(regW_o_valE         ),
-    .regW_o_valM            (regW_o_valM),
+    .regW_o_valM            (regW_o_valM         ),
     .regW_o_pc          	(regW_o_pc           ),
     .regW_o_instr       	(regW_o_instr        ),
     .regW_o_commit      	(regW_o_commit       ),
@@ -322,11 +322,11 @@ wire [63:0] write_back_o_wb_valD;
 write_back u_write_back(
     .regW_i_wb_reg_wen       	(regW_o_wb_reg_wen        ),
     .regW_i_wb_rd            	(regW_o_wb_rd             ),
-    .regW_i_pc                  (regW_o_pc),
+    .regW_i_pc                  (regW_o_pc                ),
     .regW_i_wb_valD_sel      	(regW_o_wb_valD_sel       ),
-    .regW_i_valM                (regW_o_valM),
+    .regW_i_valM                (regW_o_valM              ),
     .regW_i_valE             	(regW_o_valE              ),
-    .regW_i_instr               (regW_o_instr),
+    .regW_i_instr               (regW_o_instr             ),
     .write_back_o_wb_reg_wen 	(write_back_o_wb_reg_wen  ),
     .write_back_o_wb_rd      	(write_back_o_wb_rd       ),
     .write_back_o_wb_valD    	(write_back_o_wb_valD     )
@@ -355,3 +355,6 @@ ctrl u_ctrl(
 );
 
 endmodule
+
+//目前是流水线把commit流出来，来进行difftest
+//目前新流水线想法就是：把所有的测试文件用bin文件保存到一个文件夹下，用命令行参数传入不同的文件给模拟器(这样跑的程序就是一样的，只需要cpu提供一个commit就行，甚至可以自定义进行n步)

@@ -100,6 +100,7 @@ void init_simulator(int argc, char **argv){
 #include <defs.h>
 
 int main(int argc, char **argv){
+  printf("\n %s\n", ANSI_FMT(str(__GUEST_ISA__), ANSI_FG_YELLOW ANSI_BG_RED));
   init_simulator(argc, argv);
   cpu_exec(UINT64_MAX);
   return 0;

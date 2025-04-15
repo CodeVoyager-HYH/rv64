@@ -16,7 +16,6 @@ extern "C" uint32_t dpi_instr_mem_read(uint64_t addr){
 		IFDEF(,Log("[fetch]addr = %lx,intsr = %lx",addr,pmem_read(addr, 4)));
 		return pmem_read(addr, 4);
 	}else{
-      printf("你将要访问的内存地址是0x%lx, 超出了内存区域\n", addr);
       return 0;
    }
 }
@@ -36,10 +35,7 @@ extern "C" uint64_t dpi_mem_read(uint64_t addr, uint64_t len, uint32_t instr){
 
 extern "C" void dpi_mem_write(uint64_t addr, uint64_t data, int len, uint32_t instr, uint64_t pc){
 //	printf("store指令, 写入地址addr=[%lx], 写入数据wdata=[%lx], 写入长度len=[%d]\n", addr, data, len);
-	uint64_t error = 0x80000b30;
-	if(error!=NULL){
-		Log("0x80000b30 == %lx,intr = %x,addr = %lx,pc = %lx",pmem_read(0x80000b30, 4),instr,addr,pc);
-	}
+
 	if(addr == CONFIG_SERIAL_MMIO){
 		char ch = data;
 		printf("%c", ch);
@@ -52,9 +48,7 @@ extern "C" void dpi_mem_write(uint64_t addr, uint64_t data, int len, uint32_t in
 		
 		pmem_write(addr, len, data);
 	}
-	if(error!=NULL){
-		Log("0x80000b30 == %lx,intr = %x,addr = %lx, pc = %lx",pmem_read(0x80000b30, 4),instr,addr,pc);
-	}
+
 }
 
 

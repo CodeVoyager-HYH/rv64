@@ -63,7 +63,6 @@ assign memory_o_valM  =     (regM_i_load_type == `lb ) ? {{56{mem_read_val[7] }}
 wire [31:0] write_byte = {28'b0, regM_i_mem_wmask};
 always @(posedge clk)begin
     if(regM_i_mem_wen==1 && regM_i_mem_wmask != `zero_byte) begin
-		$display("regM_i_valE = %x, regM_i_valB = %x,pc = %x,inst = %x",regM_i_valE,regM_i_valB,regM_o_pc, regM_o_instr);
         dpi_mem_write(regM_i_valE, regM_i_valB, write_byte, regM_o_instr, regM_o_pc);
     end
 end
